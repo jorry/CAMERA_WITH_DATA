@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="20dip"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="50dip"
+        android:text="拍照" />
+
+    <Button
+        android:id="@+id/photo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dip"
+        android:text="系统图库" />
+
+     <Button
+        android:id="@+id/contact"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dip"
+        android:text="获取联系人" />
+</LinearLayout>
