@@ -35,7 +35,13 @@ public class Main extends Activity {
 
       @Override
       public void onClick(View v) {
-        // SelectPhotMode.getPicFromContent(Main.this);
+         SelectPhotMode.getPicFromContent(Main.this);
+      }
+    });
+    findViewById(R.id.contact).setOnClickListener(new OnClickListener() {
+
+      @Override
+      public void onClick(View v) {
 
         Cursor c =
             getContentResolver().query(
