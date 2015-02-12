@@ -13,6 +13,16 @@ public class ContactsBean implements Comparator<ContactsBean>{
     private String number ;
     private float matcher ;
     
+    private String emai;
+    
+    public String getEmai() {
+      return emai;
+    }
+
+    public void setEmai(String emai) {
+      this.emai = emai;
+    }
+
     public ContactsBean() {
     }
     

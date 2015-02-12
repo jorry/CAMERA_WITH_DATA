@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -35,14 +36,15 @@ public class Main extends Activity {
 
       @Override
       public void onClick(View v) {
-         SelectPhotMode.getPicFromContent(Main.this);
+        SelectPhotMode.getPicFromContent(Main.this);
       }
     });
     findViewById(R.id.contact).setOnClickListener(new OnClickListener() {
 
       @Override
       public void onClick(View v) {
-
+        ContentResolver contentResolver = Main.this.getContentResolver();
+        String email = "";
         Cursor c =
             getContentResolver().query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -60,12 +62,27 @@ public class Main extends Activity {
               c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
           float tempMatcher = 0;
           ContactsBean contactsBean = new ContactsBean(tempId, tempName, tempNumber, tempMatcher);
+
+          // Fetch email
+          Cursor emailCursor =
+              contentResolver.query(
+                  android.provider.ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                  android.provider.ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=" + tempId,
+                  null, null);
+          while (emailCursor.moveToNext()) {
+            email =
+                emailCursor.getString(emailCursor
+                    .getColumnIndex(android.provider.ContactsContract.CommonDataKinds.Email.DATA));
+            contactsBean.setEmai(email);
+            Log.i("vi", contactsBean.getName()+"联系人  邮件= " + email);
+          }
+
           mAllContacts.add(contactsBean);
         }
 
         for (int i = 0; i < mAllContacts.size(); i++) {
           Log.i("vi", "联系人 = " + mAllContacts.get(i).getName() + " "
-              + mAllContacts.get(i).getNumber());
+              + mAllContacts.get(i).getNumber()+" email"+mAllContacts.get(i).getEmai());
         }
 
       }
@@ -100,7 +117,7 @@ public class Main extends Activity {
     if (TextUtils.isEmpty(fileUri)) {
       return;
     }
-    BitmapTools.getThumbUploadPath(fileUri,1080, 500, new PicInterface() {
+    BitmapTools.getThumbUploadPath(fileUri, 1080, 500, new PicInterface() {
 
       @Override
       public void onSusse(Bitmap bit, String picPath) {
